@@ -26,6 +26,8 @@ uv tool install markitai                    # core
 uv tool install 'markitai[browser]'         # + Playwright (JS-rendered URLs)
 uv tool install 'markitai[claude-agent]'    # + Claude Code CLI provider
 uv tool install 'markitai[copilot]'         # + GitHub Copilot provider
+uv tool install 'markitai[gemini-cli]'      # + Gemini CLI OAuth provider
+uv tool install 'markitai[kreuzberg]'       # + extra formats (TSV, XML, ODS, RTF, etc.)
 uv tool install 'markitai[all]'             # everything
 ```
 
@@ -71,13 +73,13 @@ In `--llm` mode, only `.llm.md` is written. Use `--keep-base` to also write the 
 
 ## Presets
 
-| Preset | LLM | Alt text | Descriptions | Screenshots | OCR |
-|--------|-----|----------|-------------|-------------|-----|
-| `--preset minimal` | off | off | off | off | off |
-| `--preset standard` | on | on | off | off | on |
-| `--preset rich` | on | on | on | on | on |
+| Preset | LLM | Alt text | Descriptions | Screenshots |
+|--------|-----|----------|-------------|-------------|
+| `--preset minimal` | off | off | off | off |
+| `--preset standard` | on | on | on | off |
+| `--preset rich` | on | on | on | on |
 
-Default behavior without `--preset`: LLM off, OCR off, screenshots off.
+Default behavior without `--preset`: all off. OCR is always a separate opt-in (`--ocr`).
 
 ## Key options
 
@@ -86,12 +88,15 @@ Default behavior without `--preset`: LLM off, OCR off, screenshots off.
 - `--alt / --no-alt` — generate image alt text (requires `--llm`)
 - `--desc / --no-desc` — generate image descriptions (requires `--llm`)
 - `--pure` — skip frontmatter and post-processing
+- `--keep-base` — keep base `.md` alongside `.llm.md` in LLM mode
 
-**URL fetch strategy** (auto-detected by default):
+**URL fetch strategy** (auto-detected by default, chain: defuddle → jina → static → playwright → cloudflare):
 - `--defuddle` — Defuddle API (best cleaning, free)
 - `--jina` — Jina Reader API
 - `--playwright` — headless browser (JS-rendered pages)
 - `--cloudflare` — Cloudflare cloud backend
+
+Static (httpx/curl-cffi) is always in the chain as fallback. No CLI flag — auto-selected when appropriate.
 
 **Screenshots & OCR:**
 - `--screenshot / --no-screenshot` — capture pages/slides as images
@@ -99,7 +104,7 @@ Default behavior without `--preset`: LLM off, OCR off, screenshots off.
 - `--ocr / --no-ocr` — OCR for scanned documents
 
 **Batch & performance:**
-- `-j, --batch-concurrency <N>` — concurrent file processing (default: 15)
+- `-j, --batch-concurrency <N>` — concurrent file processing (default: 10)
 - `--resume` — resume interrupted batch job
 - `--dry-run` — preview without writing
 - `-g, --glob <pattern>` — filter files (repeatable, `!` to exclude)
@@ -108,7 +113,6 @@ Default behavior without `--preset`: LLM off, OCR off, screenshots off.
 **Cache:**
 - `--no-cache` — disable LLM result caching
 - `--no-cache-for <patterns>` — bypass cache for specific files
-- `--keep-base` — keep base `.md` alongside `.llm.md`
 
 **Output & logging:**
 - `-o, --output <path>` — output directory
@@ -122,7 +126,7 @@ Default behavior without `--preset`: LLM off, OCR off, screenshots off.
 | Provider prefix | Example | Setup |
 |----------------|---------|-------|
 | `claude-agent/` | `claude-agent/sonnet` | `claude` CLI installed |
-| `copilot/` | `copilot/gpt-4.1` | `gh copilot` installed |
+| `copilot/` | `copilot/gpt-5.2` | `gh copilot` installed |
 | `chatgpt/` | `chatgpt/gpt-5.2` | `markitai auth login chatgpt` |
 | `gemini-cli/` | `gemini-cli/gemini-2.5-pro` | `markitai auth login gemini-cli` |
 
