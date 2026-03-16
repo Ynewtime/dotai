@@ -12,7 +12,7 @@ npx skills add Ynewtime/dotai
 
 | Skill | Description |
 |-------|-------------|
-| [chrome-cdp](skills/chrome-cdp/) | Interact with local Chrome browser via DevTools Protocol — no Puppeteer, works with 100+ tabs |
+| [chrome-cdp](skills/chrome-cdp/) | Interact with local Chrome browser via DevTools Protocol — no Puppeteer, works with 100+ tabs. Based on [pasky/chrome-cdp-skill](https://github.com/pasky/chrome-cdp-skill) |
 | [handoff](skills/handoff/) | Generate agent-to-agent handoff summary when context is too long |
 | [markitai](skills/markitai/) | Convert 30+ document formats and URLs to clean Markdown with optional LLM enhancement |
 

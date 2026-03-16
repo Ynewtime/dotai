@@ -1,5 +1,8 @@
 #!/usr/bin/env bun
 // cdp - lightweight Chrome DevTools Protocol CLI
+// Originally created by Petr Baudiš (https://github.com/pasky/chrome-cdp-skill)
+// Licensed under MIT. Fork with Windows/WSL support by Ynewtime.
+//
 // Uses raw CDP over WebSocket, no Puppeteer dependency.
 // Requires Bun (or Node 22+ with built-in WebSocket).
 //

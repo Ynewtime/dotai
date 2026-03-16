@@ -44,3 +44,7 @@ scripts/cdp.mjs stop    [target]                   # stop daemon(s)
 - Use `type` (not eval) for cross-origin iframes — `click`/`clickxy` to focus first, then `type`.
 - Avoid index-based DOM selection across multiple `eval` calls when the DOM can change between them. Use stable selectors or collect all data in one `eval`.
 - Chrome shows an "Allow debugging" modal once per tab. A daemon keeps the session alive; auto-exits after 20 min idle.
+
+## Credits
+
+Based on [pasky/chrome-cdp-skill](https://github.com/pasky/chrome-cdp-skill) by Petr Baudiš. MIT License.
