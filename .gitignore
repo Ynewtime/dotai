@@ -2,3 +2,8 @@ node_modules/
 *.bak
 *.skill
 .DS_Store
+
+# npx skills add (prevent in-repo install artifacts)
+.agents/
+.claude/
+skills-lock.json
