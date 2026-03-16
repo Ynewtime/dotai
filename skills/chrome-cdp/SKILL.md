@@ -9,8 +9,9 @@ Lightweight Chrome DevTools Protocol CLI. Connects via WebSocket — no Puppetee
 
 ## Prerequisites
 
-- Chrome with remote debugging enabled: `chrome://inspect/#remote-debugging` → toggle switch
+- Chrome (or Chromium, Brave, Edge, Vivaldi) with remote debugging enabled: `chrome://inspect/#remote-debugging` → toggle switch
 - Bun (or Node.js 22+)
+- If your browser's `DevToolsActivePort` is in a non-standard location, set `CDP_PORT_FILE` to its full path
 
 ## Core workflow
 
@@ -27,13 +28,14 @@ scripts/cdp.mjs eval <target> <expr>          # evaluate JS expression
 
 ```bash
 scripts/cdp.mjs html    <target> [selector]      # full page or element HTML
-scripts/cdp.mjs nav     <target> <url>            # navigate and wait for load
+scripts/cdp.mjs nav     <target> <url>            # navigate and wait for load (http/https only)
 scripts/cdp.mjs net     <target>                  # resource timing entries
 scripts/cdp.mjs click   <target> <selector>       # click by CSS selector
 scripts/cdp.mjs clickxy <target> <x> <y>          # click at CSS pixel coords
 scripts/cdp.mjs type    <target> <text>            # insert text at current focus
 scripts/cdp.mjs loadall <target> <selector> [ms]   # click "load more" until gone
 scripts/cdp.mjs evalraw <target> <method> [json]   # raw CDP command passthrough
+scripts/cdp.mjs open    [url]                      # open new tab (each triggers Allow prompt)
 scripts/cdp.mjs stop    [target]                   # stop daemon(s)
 ```
 
