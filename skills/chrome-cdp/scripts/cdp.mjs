@@ -143,7 +143,7 @@ class CDP {
             handler(msg.params || {}, msg);
           }
         }
-      };
+      });
     });
   }
 
