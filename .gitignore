@@ -1,0 +1,4 @@
+node_modules/
+*.bak
+*.skill
+.DS_Store
