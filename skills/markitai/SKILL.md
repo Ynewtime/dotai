@@ -7,14 +7,33 @@ description: Convert documents, URLs, and images to clean Markdown using Markita
 
 Opinionated Markdown converter with LLM enhancement. Converts 30+ formats (DOCX, PDF, PPTX, XLSX, images, URLs, HTML, EPUB, CSV, etc.) to clean Markdown.
 
-## Prerequisites
+## Setup
 
+Requires Python 3.11–3.13.
+
+**One-click (recommended):**
 ```bash
-uv tool install markitai          # core
-uv tool install 'markitai[all]'   # all optional deps (browser, LLM providers, etc.)
+# Linux/macOS
+curl -fsSL https://raw.githubusercontent.com/Ynewtime/markitai/main/scripts/setup.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://raw.githubusercontent.com/Ynewtime/markitai/main/scripts/setup.ps1 | iex"
 ```
 
-Verify: `markitai doctor` (checks deps, auth, health).
+**Manual:**
+```bash
+uv tool install markitai                    # core
+uv tool install 'markitai[browser]'         # + Playwright (JS-rendered URLs)
+uv tool install 'markitai[claude-agent]'    # + Claude Code CLI provider
+uv tool install 'markitai[copilot]'         # + GitHub Copilot provider
+uv tool install 'markitai[all]'             # everything
+```
+
+**First run:**
+```bash
+markitai doctor --fix    # check deps and auto-fix
+markitai -I              # interactive guided setup (recommended for new users)
+```
 
 ## Core usage
 
@@ -34,6 +53,21 @@ markitai ./docs -o ./output
 # URL list (.urls file, one URL per line)
 markitai urls.urls -o ./output
 ```
+
+## Output structure
+
+```
+output/
+├── document.docx.md            # Markdown (skipped in --llm mode unless --keep-base)
+├── document.docx.llm.md        # LLM-enhanced version (when --llm)
+└── .markitai/
+    ├── assets/                  # extracted images
+    ├── screenshots/             # page/slide screenshots (with --screenshot)
+    ├── reports/                 # batch conversion reports (JSON)
+    └── states/                  # batch state files (for --resume)
+```
+
+In `--llm` mode, only `.llm.md` is written. Use `--keep-base` to also write the base `.md`.
 
 ## Presets
 
